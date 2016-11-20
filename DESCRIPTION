@@ -1,0 +1,10 @@
+Package: fishindexr
+Type: Package
+Title: Fish Based Multi-Metric indices for Transitional Waters
+Version: 0.1.0
+Author: Matteo Zucchetta
+Maintainer: Matteo Zucchetta <matzuc@unive.it>
+Description: More about what it does (maybe more than one line)
+License: gpl2
+LazyData: TRUE
+RoxygenNote: 5.0.1
