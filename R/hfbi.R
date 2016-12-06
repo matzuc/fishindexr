@@ -1,22 +1,30 @@
-# Hello, world!
+# Test function
 #
-# This is an example function named 'hello'
-# which prints 'Hello, world!'.
-#
-# You can learn more about package authoring with RStudio at:
-#
-#   http://r-pkgs.had.co.nz/
-#
-# Some useful keyboard shortcuts for package authoring:
-#
-#   Build and Reload Package:  'Ctrl + Shift + B'
-#   Check Package:             'Ctrl + Shift + E'
-#   Test Package:              'Ctrl + Shift + T'
-
-hfbi <- function(N = NULL, B = NULL, my.sp = NULL, my.area = NULL, cod = NULL, guildsI = guilds, Gf_list = c(4:8), Gt_list = c(10:17), hfbiweightsI = hfbiweights, hfbithresholdI = hfbithreshold, hfbirtI = hfbirt, hfbirefcondI = hfbirefcond) {
 
 
-        # inserire un controllo per verificare se si trovano tutte le guild e avvisare se qualcuna manca
+hfbi <- function(db = NULL, N = NULL, B = NULL, my.sp = NULL, my.area = NULL, cod = NULL, guildsI = guilds, Gf_list = c(4:8), Gt_list = c(10:17), hfbiweightsI = hfbiweights, hfbithresholdI = hfbithreshold, hfbirtI = hfbirt, hfbirefcondI = hfbirefcond, Nname = "abundance", Bname = "biomass") {
+
+# check if the data have been supplied as a single database or as two data.frame (N & B)
+
+        if(! is.null(db)){ # if a db has been provided (it should have a )
+                indB <- which(names(db) == Nname)
+                indN <- which(names(db) == Bname)
+
+                #♣ pointer to the species column
+                my.spdb <- my.sp
+
+                all_species <- as.character(levels(factor(db[,my.spdb])))
+
+
+                N <- reshape2::dcast(db[, -c(indB)],  ... ~ species, value.var = names(db)[indN])
+                B <- reshape2::dcast(db[, -c(indN)],  ... ~ species, value.var = names(db)[indB])
+
+                # set up the species list
+                my.sp <- match(all_species, names(N))
+        }
+
+
+
 
 # Metrics computation
 
@@ -188,9 +196,6 @@ hfbi <- function(N = NULL, B = NULL, my.sp = NULL, my.area = NULL, cod = NULL, g
         ####################################################################################
 
 
-        #A <- c(-3,0.11,0.33,0.55,0.94)
-
-     #   A* hfbirtI[[2]]-hfbirtI[[1]]
 
 
         HFBI$class <- cut( HFBI$HFBIts, c(hfbithresholdI$x, 1000),  labels = c("Bad", "Poor", "Moderate", "Good", "High"))
