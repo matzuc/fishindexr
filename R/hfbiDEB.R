@@ -2,28 +2,24 @@
 #
 
 
-hfbi <- function(db = NULL, N = NULL, B = NULL, my.sp = NULL, my.area = NULL, cod = NULL, guildsI = guilds, Gf_list = c(4:8), Gt_list = c(10:17), hfbiweightsI = hfbiweights, hfbithresholdI = hfbithreshold, hfbirtI = hfbirt, hfbirefcondI = hfbirefcond, Nname = "abundance", Bname = "biomass") {
+hfbiDEB <- function(db = NULL,  my.area = NULL, my.sp = NULL, cod = NULL, guildsI = guilds, Gf_list = c(4:8), Gt_list = c(10:17), hfbiweightsI = hfbiweights, hfbithresholdI = hfbithreshold, hfbirtI = hfbirt, hfbirefcondI = hfbirefcond, Nname = "abundance", Bname = "biomass") {
 
 # check if the data have been supplied as a single database or as two data.frame (N & B)
 
-        if(!is.null(db)){ # if a db has been provided (it should have a )
                 indB <- which(names(db) == Nname)
                 indN <- which(names(db) == Bname)
 
-                # pointer to the species column
+                #♣ pointer to the species column
                 my.spdb <- my.sp
 
                 all_species <- as.character(levels(factor(db[,my.spdb])))
 
-                head(db[, c(cod, my.spdb)])
-                head(cbind(db[cod], db[my.spdb], db[indN]))
 
-                N <- reshape2::dcast(cbind(db[cod], db[my.spdb], db[indN]),  ... ~ species, value.var = names(db)[indN])
-                B <- reshape2::dcast(cbind(db[cod], db[my.spdb], db[indB]),  ... ~ species, value.var = names(db)[indB])
+                N <- reshape2::dcast(db[, -c(indB)],  ... ~ species, value.var = names(db)[indN])
+                B <- reshape2::dcast(db[, -c(indN)],  ... ~ species, value.var = names(db)[indB])
 
                 # set up the species list
                 my.sp <- match(all_species, names(N))
-        }
 
 
 

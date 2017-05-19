@@ -97,8 +97,20 @@ my.area <- which(names(N) == "area")
 
 
         M <- cbind(N[, cod], M)
+        M$id <- 1:nrow(M)
 
         T <- merge(x = M, y = nafirefcondI, by = c("season", "WBT", "vegetated"), all.x = TRUE, all.y = FALSE, sort = F)
+
+        T <- T[order(T$id), ]
+
+
+        # delete id column
+        which(names(T) == "id")
+        T <- T[, -c(which(names(T) == "id"))]
+        M <- M[, -c(which(names(M) == "id"))]
+
+
+
 
         names(T)[(ncol(M)+1) : ncol(T)] <- sub("M" , "ref", x = names(T)[(ncol(M)+1) : ncol(T)])
         names(T) <- sub(".x" , "", x = names(T))
