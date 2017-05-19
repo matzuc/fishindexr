@@ -67,7 +67,7 @@ hfbi <- function(db = NULL, N = NULL, B = NULL, my.sp = NULL, my.area = NULL, co
         # gruppi funzionali  ------------------------
         NN <- 100 * N[, my.sp] / N[, my.area]# Abbondanze (densit?)
         PP <- N[, my.sp] # P/A
-        PP [PP >1] <- 1
+        PP [PP >0] <- 1
         BB <- 100 * B[, my.sp] / N[, my.area] # biomasse (densit?)
 
         # guilds

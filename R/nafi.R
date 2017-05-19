@@ -55,7 +55,7 @@ my.area <- which(names(N) == "area")
         # gruppi funzionali  ------------------------
         NN <-  N[, my.sp] / N[, my.area]# Abbondanze (densit?)
         PP <- N[, my.sp] # P/A
-        PP [PP >1] <- 1
+        PP [PP >0] <- 1
         BB <- B[, my.sp] / N[, my.area] # biomasse (densit?)
 
         # guilds
