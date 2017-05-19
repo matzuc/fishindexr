@@ -9,7 +9,7 @@ hfbiDEB <- function(db = NULL,  my.area = NULL, my.sp = NULL, cod = NULL, guilds
                 indB <- which(names(db) == Nname)
                 indN <- which(names(db) == Bname)
 
-                #♣ pointer to the species column
+                # pointer to the species column
                 my.spdb <- my.sp
 
                 all_species <- as.character(levels(factor(db[,my.spdb])))
@@ -63,7 +63,7 @@ hfbiDEB <- function(db = NULL,  my.area = NULL, my.sp = NULL, cod = NULL, guilds
         # gruppi funzionali  ------------------------
         NN <- 100 * N[, my.sp] / N[, my.area]# Abbondanze (densit?)
         PP <- N[, my.sp] # P/A
-        PP [PP >1] <- 1
+        PP [PP >0] <- 1
         BB <- 100 * B[, my.sp] / N[, my.area] # biomasse (densit?)
 
         # guilds
